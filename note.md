@@ -12,6 +12,12 @@ Curiously Recurring Template Pattern 奇异递归模板模式
 
 buildin_expect() 和 [[likely]]的区别 
 buildin_expect限制一个语句的可能性 likely限制一个分支的可能性 
-if (buildin_expect) {} if() [[likely]] {} 
+if (buildin_expect) {} if() [[likely]] {} reopen
 行为上来讲都是对编译器的建议不一定被优化执行 
 通俗的理解cpu在取指令的时候会预先取likely修饰的指令来增快运行速度 
+
+左值和右值
+左值通俗的理解成可以放在表达式左边的值 有持续稳定可以被引用的身份 
+右值可以理解为表达式右边的值 只是一个值 相当于一个临时变量 写代码时 不能依赖他的身份和地址 
+引入左值和右值可以实现移动语义和完美转发 让编译器做更多的优化 
+
