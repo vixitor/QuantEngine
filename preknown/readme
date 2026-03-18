@@ -1,0 +1,6 @@
+构建命令
+cd preknown 
+cmake -S . -B build 
+cd build 
+cmake --build . -j 
+-j 表示并行编译
