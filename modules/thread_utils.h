@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 
-//让线程运行在指定的core上，防止调度器带来的性能消耗
 inline auto setThreadCore(int core_id) noexcept {
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
