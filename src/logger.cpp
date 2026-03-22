@@ -1,6 +1,5 @@
-#include "../include/logging.h"
-#include <iostream>
-#include <thread>
+#include "../include/logger.h"
+
 auto Logger::flushQueue() noexcept {
   while (running_ == true) {
     for (auto next = queue_.getNextToRead(); queue_.size() && next; next = queue_.getNextToRead()) {

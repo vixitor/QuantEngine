@@ -1,10 +1,5 @@
 #include "../include/socket_utils.h"
-#include <cctype>
-#include <ifaddrs.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <string>
-#include <sys/socket.h>
+
 
 auto getIfaceIP(const std::string& iface) -> std::string {
   char buf[NI_MAXHOST] = {'\0'};

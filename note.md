@@ -25,3 +25,13 @@ if (buildin_expect) {} if() [[likely]] {} reopen
 在低延迟系统中 动态分配内存是很慢的 我们可以在启动的时候申请大量内存然后自定义使用的方式来达到更快的效果
 
 指针减法像是同一个数组内的地址相减 返回的是元素地址之间的差 不同类型的指针之间的减法是非法的
+
+Nagle算法会把tcp的很多小包积攒在一起发送 发小包会带来很多tcp消耗 因为每个tcp都有ip头 tcp头之类的东西 Nagle会带来额外的等待所以在低延迟应用中会把他关掉
+
+在传一个tcp包的时候内核会加重一些control message 用CMSG_SPACE可以得到一段数据加上内核数据的真实大小
+
+如果要直接拿信息的话可以recv(fd_, buf, sizeof(buf)) 但是通过recvmsg 并且使用msg可以控制更多的东西 可以通过msg_control拿到内核写的信息 通过msg_name拿到对端端口的信息 通过iov控制数据写到哪里
+
+lambda一般情况下会比std::function要好 因为std::function内部可以装很多东西 比如普通函数 bind的结果 lambda 所以内部做了一些统一接口的操作 lambda的调用链更加简单 编译器更好做优化 
+
+回顾一下reactor框架 reactor是io线程和worker线程分离的典型 有一个acceptr专门负责监听

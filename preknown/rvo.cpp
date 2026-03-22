@@ -12,4 +12,4 @@ RVO createRVO(int a,char b, double c) {
 int main (){
     RVO rvo = createRVO(1,'x',3.14);
     return 0;
-}re
+}

@@ -1,4 +1,4 @@
-#include "../modules/thread_utils.h"
+#include "../include/thread_utils.h"
 auto dummyFunction(int a,int b,bool sleep){
     std::cout<<"dummyFunction("<<a<<","<<b<<")"<<std::endl;
     std::cout<<"dummyFunctionOutput "<<a + b<<std::endl;

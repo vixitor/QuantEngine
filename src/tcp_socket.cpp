@@ -1,12 +1,5 @@
 #include "../include/tcp_socket.h"
-#include <asm-generic/socket.h>
-#include <bits/types/struct_timeval.h>
-#include <cstdint>
-#include <cstring>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
+
 TCPSocket::TCPSocket(Logger& logger) : logger_(logger) {
   send_buffer_ = new char[TCPBufferSize];
   recv_buffer_ = new char[TCPBufferSize];
@@ -15,8 +8,11 @@ TCPSocket::TCPSocket(Logger& logger) : logger_(logger) {
   };
 }
 void TCPSocket::close() noexcept {
-  ::close(fd_);
-  fd_ = -1;
+  if (fd_ != -1) {
+
+    ::close(fd_);
+    fd_ = -1;
+  }
 }
 
 TCPSocket::~TCPSocket() {
@@ -73,11 +69,43 @@ auto TCPSocket::sendAndRecv() noexcept -> bool {
                 kernel_time, (user_time - kernel_time));
     recv_callback_(this, kernel_time);
   }
-  if(next_send_valid_index_ > 0){
+  if (next_send_valid_index_ > 0) {
     const auto n = ::send(fd_, send_buffer_, next_send_valid_index_, MSG_DONTWAIT | MSG_NOSIGNAL);
-    logger_.log("%:% %() % send socket:% len:%\n", __FILE__, __LINE__, __FUNCTION__, getCurrentTimeStr(&time_str_), fd_, n);
+    logger_.log("%:% %() % send socket:% len:%\n", __FILE__, __LINE__, __FUNCTION__,
+                getCurrentTimeStr(&time_str_), fd_, n);
     ASSERT(n == next_send_valid_index_, "Could not send all the send buffer");
   }
   next_send_valid_index_ = 0;
   return (n_recv > 0);
+}
+
+auto TCPSocket::fd() -> const int& { return fd_; }
+
+auto TCPSocket::recv_len() -> const std::size_t& { return next_recv_valid_index_; }
+
+auto TCPSocket::setFd(int fd) -> void {
+  close();
+  fd_ = fd;
+}
+
+auto TCPSocket::setRecvCallback(const std::function<void(TCPSocket* socket, Nanos rx_time)>& func)
+    -> void {
+  recv_callback_ = func;
+}
+
+void TCPSocket::setNextRecvValidIndex(int index) { next_recv_valid_index_ = index; }
+
+void TCPSocket::setNextSendValidIndex(int index) { next_send_valid_index_ = index; }
+
+std::string TCPSocket::getRecvData(int index) {
+  if (index == -1) {
+    return std::string(recv_buffer_, next_recv_valid_index_);
+  }
+  return std::string(recv_buffer_, index);
+}
+std::string TCPSocket::getSendData(int index) {
+  if (index == -1) {
+    return std::string(send_buffer_, next_send_valid_index_);
+  }
+  return std::string(send_buffer_, index);
 }

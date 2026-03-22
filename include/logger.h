@@ -7,7 +7,8 @@
 #include <fstream>
 #include <string>
 #include <thread>
-
+#include <iostream>
+#include <thread>
 constexpr size_t LOG_QUEUE_SIZE = 8 * 1024 * 1024;
 enum class LogType : int8_t {
   CHAR = 0,
@@ -69,4 +70,3 @@ public:
   auto log(const char* s,const T &value,Args... args) -> void;
   auto log(const char* s) -> void;
 };
-

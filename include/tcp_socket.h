@@ -1,10 +1,16 @@
 #pragma once
-#include "logging.h"
+#include "logger.h"
 #include "socket_utils.h"
-#include "time_utils.h"
 #include <cstddef>
 #include <functional>
-
+#include <cstdint>
+#include <cstring>
+#include <netinet/in.h>
+#include <string>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <type_traits>
+#include <unistd.h>
 constexpr size_t TCPBufferSize = 64 * 1024 * 1024;
 class TCPSocket {
 private:
@@ -34,8 +40,16 @@ public:
   TCPSocket(const TCPSocket&&) = delete;
   TCPSocket& operator=(const TCPSocket&) = delete;
   TCPSocket& operator=(const TCPSocket&&) = delete;
-  auto connect(const std::string& ip,const std::string& iface, int port, bool is_listening) noexcept -> int;
+  auto connect(const std::string& ip, const std::string& iface, int port,
+               bool is_listening) noexcept -> int;
   auto send(const void* data, std::size_t len) noexcept -> void;
   auto sendAndRecv() noexcept -> bool;
+  auto fd() -> const int&;
+  auto recv_len() -> const std::size_t&;
+  auto setFd(int) -> void;
+  auto setRecvCallback(const std::function<void(TCPSocket* socket, Nanos rx_time)>& func) -> void;
+  std::string getRecvData(int index = -1);
+  std::string getSendData(int index = -1);
+  void setNextRecvValidIndex(int index);
+  void setNextSendValidIndex(int index);
 };
-

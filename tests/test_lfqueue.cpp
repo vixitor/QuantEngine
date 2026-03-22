@@ -1,6 +1,6 @@
-#include "../modules/lf_queue.h"
-#include "../modules/thread_utils.h"
-#include "../modules/macros.h"
+#include "../include/lf_queue.h"
+#include "../include/thread_utils.h"
+#include "../include/macros.h"
 #include <cstddef>
 #include <iostream> 
 #include <thread>

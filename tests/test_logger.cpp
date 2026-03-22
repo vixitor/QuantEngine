@@ -1,4 +1,4 @@
-#include "../include/logging.h"
+#include "../include/logger.h"
 int main(int, char **) {
     char c = 'd';
     int i = 3;
