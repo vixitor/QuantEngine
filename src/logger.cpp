@@ -56,77 +56,59 @@ Logger::~Logger() {
     file_.close();
 }
 
-auto Logger::pushValue(const LogElement& log_element)->void{
+void Logger::pushValue(const LogElement& log_element) {
     *(queue_.getNextToWriteTo()) = log_element;
     queue_.updateWriteIndex();
 }
 
-auto Logger::pushValue(const char value) { 
+void Logger::pushValue(const char value) { 
     pushValue(LogElement{LogType::CHAR, {.c = value}});
 }
 
-auto Logger::pushValue(const char *value) -> void { 
+void Logger::pushValue(const char *value){ 
     while(*value){
         pushValue(*value);
         value++;
     }
 }
 
-auto Logger::pushValue(const int value) -> void { 
+void Logger::pushValue(const int value) { 
     pushValue(LogElement{LogType::INTEGER, {.i = value}});
 }
 
-auto Logger::pushValue(const long value) { 
+void Logger::pushValue(const long value) { 
     pushValue(LogElement{LogType::LONG_INTEGER, {.l = value}});
 }
 
-auto Logger::pushValue(const long long value) { 
+void Logger::pushValue(const long long value) { 
     pushValue(LogElement{LogType::LONG_LONG_INTEGER, {.ll = value}});
 }
 
-auto Logger::pushValue(const unsigned value) { 
+void Logger::pushValue(const unsigned value) { 
     pushValue(LogElement{LogType::UNSIGNED_INTEGER, {.u = value}});
 }
 
-auto Logger::pushValue(const unsigned long value) { 
+void Logger::pushValue(const unsigned long value) { 
     pushValue(LogElement{LogType::UNSIGNED_LONG_INTEGER, {.ul = value}});
 }
 
-auto Logger::pushValue(const unsigned long long value) { 
+void Logger::pushValue(const unsigned long long value) { 
     pushValue(LogElement{LogType::UNSIGNED_LONG_LONG_INTEGER, {.ull = value}});
 }
 
-auto Logger::pushValue(const float value) { 
+void Logger::pushValue(const float value) { 
     pushValue(LogElement{LogType::FLOAT, {.f = value}});
 }
 
-auto Logger::pushValue(const double value) { 
+void Logger::pushValue(const double value) { 
     pushValue(LogElement{LogType::DOUBLE, {.d = value}});
 }
 
-auto Logger::pushValue(const std::string& value) -> void { 
+void Logger::pushValue(const std::string& value) { 
     pushValue(value.c_str());
 }
 
-template <typename T,typename... Args> 
-    auto Logger::log(const char* s,const T &value,Args... args) -> void{
-    while(*s){
-        if(*s == '%'){
-            if(UNLIKELY(*(s + 1) == '%')){
-                s++;
-            } else {
-                pushValue(value);
-                log(s + 1, args...);
-                return;
-            }
-        }
-        pushValue(*s);
-        s++;
-    }
-    FATAL("extra arguments provided to log()");
-}
-
-auto Logger::log(const char* s) -> void {
+void Logger::log(const char* s) {
     while(*s){
         if(*s == '%') { 
             if(UNLIKELY(*(s + 1) == '%')) { 

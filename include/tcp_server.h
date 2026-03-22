@@ -35,6 +35,6 @@ public:
   auto del(TCPSocket* socket) -> void;
   auto poll() noexcept -> void;
   void setRecvCallback(std::function<void(TCPSocket*, Nanos)>);
-  void setRecvFinishCallback(std::function<void(TCPSocket*, Nanos)>);
+  void setRecvFinishCallback(std::function<void()>);
   auto sendAndRecv() noexcept -> void;
 };

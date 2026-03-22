@@ -54,19 +54,34 @@ public:
   Logger& operator=(const Logger&) = delete;
   Logger& operator=(const Logger&&) = delete;
   auto flushQueue() noexcept;
-  auto pushValue(const LogElement&) -> void ;
-  auto pushValue(const char value);
-  auto pushValue(const char *value) -> void;
-  auto pushValue(const int value) -> void;
-  auto pushValue(const long value);
-  auto pushValue(const long long value);
-  auto pushValue(const unsigned value);
-  auto pushValue(const unsigned long value);
-  auto pushValue(const unsigned long long value);
-  auto pushValue(const float value);
-  auto pushValue(const double value);
-  auto pushValue(const std::string& value) -> void;
+  void pushValue(const LogElement&);
+  void pushValue(const char value);
+  void pushValue(const char *value);
+  void pushValue(const int value);
+  void pushValue(const long value);
+void pushValue(const long long value);
+  void  pushValue(const unsigned value);
+  void pushValue(const unsigned long value);
+  void pushValue(const unsigned long long value);
+  void pushValue(const float value);
+  void pushValue(const double value);
+  void pushValue(const std::string& value);
   template <typename T,typename... Args> 
-  auto log(const char* s,const T &value,Args... args) -> void;
-  auto log(const char* s) -> void;
+  void log(const char* s,const T &value,Args... args){
+    while (*s) {
+      if (*s == '%') {
+        if (UNLIKELY(*(s + 1) == '%')) {
+          s++;
+        } else {
+          pushValue(value);
+          log(s + 1, args...);
+          return;
+        }
+      }
+      pushValue(*s);
+      s++;
+    }
+    FATAL("extra arguments provided to log()");
+  }
+  void log(const char* s);
 };

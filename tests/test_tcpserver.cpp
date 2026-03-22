@@ -17,13 +17,17 @@ int main() {
     logger_.log("TCPSocket::defaultRecvCallback() socket:% len:% rx:% msg:%\n", socket->fd(),
                 socket->recv_len(), rx_time, recv_msg);
   };
+  auto tcpServerRecvFinishedCallback = [&]()
+    noexcept{
+        logger_.log("TCPServer::defaultRecvFinishedCallback()\n");
+    };
   const std::string iface = "lo";
   const std::string ip = "127.0.0.1";
   const int port = 12345;
   logger_.log("Create TCPServer on iface:% port:%\n", iface, port);
   TCPServer server(logger_);
   server.setRecvCallback(tcpServerRecvCallback);
-  server.setRecvFinishCallback(tcpServerRecvCallback);
+  server.setRecvFinishCallback(tcpServerRecvFinishedCallback);
   server.listen(iface, port);
   std::vector<TCPSocket*> clients(5);
   for (int i = 0; i < clients.size(); i++) {
