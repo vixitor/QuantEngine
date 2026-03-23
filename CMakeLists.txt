@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.23) 
+ # linux g++ Ninja环境下构建命令 cmake -S . -B build -G Ninja -D CMAKE_CXX_COMPILER=g++ 
+cmake_minimum_required(VERSION 3.23)
 
 project(QuantEngine LANGUAGES CXX)
 

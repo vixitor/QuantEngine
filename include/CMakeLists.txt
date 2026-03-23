@@ -23,6 +23,8 @@ target_link_libraries(tcp_socket PUBLIC logger socket_utils)
 add_library(tcp_server STATIC tcp_server.h ../src/tcp_server.cpp)
 target_link_libraries(tcp_server PUBLIC tcp_socket)
 
+add_library(types INTERFACE)
+
 
 
 
