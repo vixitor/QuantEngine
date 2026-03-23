@@ -24,6 +24,10 @@ add_library(tcp_server STATIC tcp_server.h ../src/tcp_server.cpp)
 target_link_libraries(tcp_server PUBLIC tcp_socket)
 
 add_library(types INTERFACE)
+add_library(client_request INTERFACE)
+add_library(client_response INTERFACE)
+add_library(market_update INTERFACE)
+
 
 
 

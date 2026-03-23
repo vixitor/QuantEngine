@@ -21,7 +21,7 @@
 8. 如果要直接拿信息的话可以recv(fd_, buf, sizeof(buf)) 但是通过recvmsg 并且使用msg可以控制更多的东西 可以通过msg_control拿到内核写的信息 通过msg_name拿到对端端口的信息 通过iov控制数据写到哪里
 9. 在传一个tcp包的时候内核会加入一些control message 用CMSG_SPACE可以得到一段数据加上内核数据的真实大小
 10. ambda一般情况下会比std::function要好 因为std::function内部可以装很多东西 比如普通函数 bind的结果 lambda 所以内部做了一些统一接口的操作 lambda的调用链更加简单 编译器更好做优化 
-
+11. pack改变一个结构的align 可以用alignof获取一个结构的align 当没有pack的时候一个结构的align等于子结构align的最大值
 ###  基础模块
 
 1. 为什么需要内存池 

@@ -6,7 +6,7 @@
 
 typedef uint64_t OrderId;
 constexpr OrderId OrderId_INVALID = std::numeric_limits<OrderId>::max();
-inline std::string orderToString(OrderId order_id) {
+inline std::string orderIdToString(OrderId order_id) {
   if (UNLIKELY(order_id == OrderId_INVALID)) {
     return "INVALID";
   } else {
@@ -15,9 +15,9 @@ inline std::string orderToString(OrderId order_id) {
 }
 
 typedef uint32_t TickerId;
-constexpr TickerId Ticker_INVALID = std::numeric_limits<TickerId>::max();
-inline std::string tickerToString(TickerId ticker_id) {
-  if (UNLIKELY(ticker_id == Ticker_INVALID)) {
+constexpr TickerId TickerId_INVALID = std::numeric_limits<TickerId>::max();
+inline std::string tickerIdToString(TickerId ticker_id) {
+  if (UNLIKELY(ticker_id == TickerId_INVALID)) {
     return "INVALID";
   } else {
     return std::to_string(ticker_id);
@@ -25,9 +25,9 @@ inline std::string tickerToString(TickerId ticker_id) {
 }
 
 typedef uint32_t ClientId;
-constexpr ClientId Client_INVALID = std::numeric_limits<ClientId>::max();
-inline std::string clientToString(ClientId client_id) {
-  if (UNLIKELY(client_id == Client_INVALID)) {
+constexpr ClientId ClientId_INVALID = std::numeric_limits<ClientId>::max();
+inline std::string clientIdToString(ClientId client_id) {
+  if (UNLIKELY(client_id == ClientId_INVALID)) {
     return "INVALID";
   } else {
     return std::to_string(client_id);
