@@ -6,7 +6,11 @@ MatchingEngine::MatchingEngine(ClientRequestLFQueue* client_request,
                                ClientResponseLFQueue* client_response,
                                MEMarketUpdateLFQueue* market_update)
     : incoming_request_(client_request), outgoing_response_(client_response),
-      outgoing_md_updates_(market_update), logger_("exchange_matching_enging.log") {}
+      outgoing_md_updates_(market_update), logger_("exchange_matching_enging.log") {
+        for(int i = 0;i < ticker_order_book_.size();i++){
+    ticker_order_book_[i] = new MEOrderBook(i, &logger_, this);
+  }
+      }
 MatchingEngine::~MatchingEngine() {
   run_ = false;
   using namespace std::literals::chrono_literals;
@@ -14,6 +18,10 @@ MatchingEngine::~MatchingEngine() {
   incoming_request_ = nullptr;
   outgoing_response_ = nullptr;
   outgoing_md_updates_ = nullptr;
+  for(int i = 0;i < ticker_order_book_.size();i++){
+    delete ticker_order_book_[i];
+    ticker_order_book_[i] = nullptr;
+  }
 }
 void MatchingEngine::start() {
   run_ = true;

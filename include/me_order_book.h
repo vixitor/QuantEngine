@@ -43,4 +43,6 @@ public:
   void cancel(ClientId, OrderId, TickerId);
   void removeOrder(MEOrder*) noexcept ;
   void removeOrdersAtPrice(Side,Price) noexcept;
+  Quantity checkForMatch(ClientId client_id, OrderId client_order_id,TickerId ticker_id,Side side, Price price, Quantity qty, OrderId new_market_order_id) noexcept;
+  void match(TickerId ticker_id, ClientId client_id, Side side, OrderId client_order_id, OrderId new_market_order_id, MEOrder* itr, Quantity* leaves_qty) noexcept;
 };
