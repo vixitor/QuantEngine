@@ -40,4 +40,7 @@ public:
   Priority getNextPriority(Price);
   void addOrder(MEOrder*);
   void addOrderAtPrice(MEOrdersAtPrice*);
+  void cancel(ClientId, OrderId, TickerId);
+  void removeOrder(MEOrder*) noexcept ;
+  void removeOrdersAtPrice(Side,Price) noexcept;
 };

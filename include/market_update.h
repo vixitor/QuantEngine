@@ -28,9 +28,13 @@ class MEMarketUpdate {
   Price price_ = Price_INVALID;
   Quantity quantity_ = Quantity_INVALID;
   Priority priority_ = Priority_INVALID;
-public: 
+
+public:
   MEMarketUpdate() = default;
-  MEMarketUpdate(MarketUpdateType type, OrderId order_id, TickerId ticker_id,Side side,Price price, Quantity quantity,Priority priority) : type_(type), order_id_(order_id), ticker_id_(ticker_id), side_(side), price_(price), quantity_(quantity), priority_(priority) {} 
+  MEMarketUpdate(MarketUpdateType type, OrderId order_id, TickerId ticker_id, Side side,
+                 Price price, Quantity quantity, Priority priority)
+      : type_(type), order_id_(order_id), ticker_id_(ticker_id), side_(side), price_(price),
+        quantity_(quantity), priority_(priority) {}
   auto toString() const {
     std::stringstream ss;
     ss << "MEMarketUpdate"

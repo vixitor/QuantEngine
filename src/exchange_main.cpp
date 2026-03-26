@@ -30,7 +30,8 @@ int main(int, char**) {
   matching_engine = new MatchingEngine(&client_requests, &client_responses, &market_updates);
   matching_engine->start();
   while (true) {
-    logger->log("%:% %() % Sleeping for a few milliseconds..\n", __FILE__, __LINE__, __FUNCTION__,getCurrentTimeStr(&time_str));
+    logger->log("%:% %() % Sleeping for a few milliseconds..\n", __FILE__, __LINE__, __FUNCTION__,
+                getCurrentTimeStr(&time_str));
     usleep(sleep_time * 1000);
   }
 }
