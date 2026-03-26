@@ -2,9 +2,9 @@
 #include "logger.h"
 #include "socket_utils.h"
 #include <cstddef>
-#include <functional>
 #include <cstdint>
 #include <cstring>
+#include <functional>
 #include <netinet/in.h>
 #include <string>
 #include <sys/socket.h>

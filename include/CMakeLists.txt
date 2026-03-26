@@ -27,6 +27,8 @@ add_library(types INTERFACE)
 add_library(client_request INTERFACE)
 add_library(client_response INTERFACE)
 add_library(market_update INTERFACE)
+add_library(me_order INTERFACE)
+
 
 
 

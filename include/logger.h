@@ -5,11 +5,9 @@
 #include "time_utils.h"
 #include <cstdio>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <thread>
-#include <iostream>
-#include <thread>
-constexpr size_t LOG_QUEUE_SIZE = 8 * 1024 * 1024;
 enum class LogType : int8_t {
   CHAR = 0,
   INTEGER = 1,
@@ -56,18 +54,17 @@ public:
   auto flushQueue() noexcept;
   void pushValue(const LogElement&);
   void pushValue(const char value);
-  void pushValue(const char *value);
+  void pushValue(const char* value);
   void pushValue(const int value);
   void pushValue(const long value);
-void pushValue(const long long value);
-  void  pushValue(const unsigned value);
+  void pushValue(const long long value);
+  void pushValue(const unsigned value);
   void pushValue(const unsigned long value);
   void pushValue(const unsigned long long value);
   void pushValue(const float value);
   void pushValue(const double value);
   void pushValue(const std::string& value);
-  template <typename T,typename... Args> 
-  void log(const char* s,const T &value,Args... args){
+  template <typename T, typename... Args> void log(const char* s, const T& value, Args... args) {
     while (*s) {
       if (*s == '%') {
         if (UNLIKELY(*(s + 1) == '%')) {

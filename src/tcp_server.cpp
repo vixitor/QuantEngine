@@ -132,10 +132,10 @@ auto TCPServer::sendAndRecv() noexcept -> void {
   }
 }
 
-void TCPServer::setRecvCallback(std::function<void (TCPSocket *, Nanos)> func) { 
+void TCPServer::setRecvCallback(std::function<void(TCPSocket*, Nanos)> func) {
   recv_callback_ = func;
 }
 
-void TCPServer::setRecvFinishCallback(std::function<void()> func) { 
+void TCPServer::setRecvFinishCallback(std::function<void()> func) {
   recv_finished_callback_ = func;
 }

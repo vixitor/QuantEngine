@@ -22,6 +22,8 @@
 9. 在传一个tcp包的时候内核会加入一些control message 用CMSG_SPACE可以得到一段数据加上内核数据的真实大小
 10. ambda一般情况下会比std::function要好 因为std::function内部可以装很多东西 比如普通函数 bind的结果 lambda 所以内部做了一些统一接口的操作 lambda的调用链更加简单 编译器更好做优化 
 11. pack改变一个结构的align 可以用alignof获取一个结构的align 当没有pack的时候一个结构的align等于子结构align的最大值
+12. (a -> b) (a -> c) (b -> d) (c -> d) ->表示在前面被后面include在头文件中 这个时候会出现redefintion问题 需要用pragma标记 他的作用类似于传统的#ifndef A_H #define A_H
+13. 
 ###  基础模块
 
 1. 为什么需要内存池 
@@ -61,13 +63,11 @@
 	  3. 订单信息更新比如被动订单添加修改删除
 	  4. 交易信息 交易工具id 交易价格和数量
 	  5. 交易统计信息 开盘价 收盘价 最高价最低价等
-
 - order gateway server 
 
   - tcp connection manager 和用户建立连接 处理不活跃的连接 
   - FIFO sequencer 保证公平性地接收数据再转发给撮合引擎 
   - order gateway protocol encoder & decoder 在撮合引擎格式和网关格式之间作转化
-
 - market data consumer 
 
   - 订阅和消费交易所的多播网络流量 
@@ -91,4 +91,8 @@
 - trading engine
 	- 根据交易所发布的信息构建限价订单簿 有时并不需要构建完整的订单簿只需要关注需要的信息 这是构建的订单会和交易所中撮合引擎的订单有区别因为有各种延迟
 	- 构建特征引擎 根据订单簿做分析 
-	- 
+- 构建订单簿 
+  - 每个用户维护一个hashmap表示orderid对应meorder
+
+
+

@@ -1,6 +1,5 @@
 #include "../include/socket_utils.h"
 
-
 auto getIfaceIP(const std::string& iface) -> std::string {
   char buf[NI_MAXHOST] = {'\0'};
   ifaddrs* ifaddr = nullptr;
